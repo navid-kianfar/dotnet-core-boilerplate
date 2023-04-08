@@ -1,0 +1,28 @@
+﻿{
+  "profiles": {
+    "MyApplication.Workers": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "APP_ENV": "Development",
+        "APP_BUILD": "1.0.0",
+        "APP_AUTH_ISSUER": "my-app",
+        "APP_AUTH_SECRET": "",
+        "APP_AUTH_SALT": "",
+        "APP_DB_SERVER": "localhost",
+        "APP_DB_PORT": "5432",
+        "APP_DB_NAME": "my-app-development",
+        "APP_DB_USER": "",
+        "APP_DB_PASS": "",
+        "APP_STORAGE_SERVER": "localhost",
+        "APP_STORAGE_USER": "",
+        "APP_STORAGE_PASS": "",
+        "APP_STORAGE_BUCKET": "my-app",
+        "APP_QUEUE_SERVER": "localhost",
+        "APP_QUEUE_USER": "admin",
+        "APP_QUEUE_PASS": "",
+        "APP_QUEUE_PREFIX": "my-app"
+      }
+    }
+  }
+}

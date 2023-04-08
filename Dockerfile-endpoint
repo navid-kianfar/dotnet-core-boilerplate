@@ -1,0 +1,39 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+
+COPY ["MyApplication.Abstraction/MyApplication.Abstraction.csproj", "MyApplication.Abstraction/"]
+RUN dotnet restore "MyApplication.Abstraction/MyApplication.Abstraction.csproj"
+COPY ["MyApplication.Abstraction/", "MyApplication.Abstraction/"]
+
+COPY ["MyApplication.DataAccess/MyApplication.DataAccess.csproj", "MyApplication.DataAccess/"]
+RUN dotnet restore "MyApplication.DataAccess/MyApplication.DataAccess.csproj"
+COPY ["MyApplication.DataAccess/", "MyApplication.DataAccess/"]
+
+COPY ["MyApplication.Business/MyApplication.Business.csproj", "MyApplication.Business/"]
+RUN dotnet restore "MyApplication.Business/MyApplication.Business.csproj"
+COPY ["MyApplication.Business/", "MyApplication.Business/"]
+
+COPY ["MyApplication.Endpoint/MyApplication.Endpoint.csproj", "MyApplication.Endpoint/"]
+RUN dotnet restore "MyApplication.Endpoint/MyApplication.Endpoint.csproj"
+COPY ["MyApplication.Endpoint/", "MyApplication.Endpoint/"]
+
+
+WORKDIR "/src/MyApplication.Endpoint"
+RUN dotnet build "MyApplication.Endpoint.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "MyApplication.Endpoint.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+EXPOSE 80
+COPY --from=publish /app/publish .
+
+#RUN apt add --no-cache bash
+RUN wget -O /bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+RUN chmod +x /bin/wait-for-it.sh
+
+ENTRYPOINT ["/bin/wait-for-it.sh", "rabbitmq:5672", "--timeout=90", "--", "dotnet", "MyApplication.Endpoint.dll"]

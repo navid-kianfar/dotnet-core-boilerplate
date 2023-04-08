@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-MyApplication.Workers-8201F70F-3A7B-4614-A3E3-D4AA1BCF243C</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MyApplication.Abstraction\MyApplication.Abstraction.csproj"/>
+        <ProjectReference Include="..\MyApplication.Business\MyApplication.Business.csproj"/>
+    </ItemGroup>
+</Project>

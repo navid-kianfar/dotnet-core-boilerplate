@@ -1,0 +1,6 @@
+dotnet ef migrations add init --context=ApplicationDbContext --startup-project=../MyApplication.Endpoint/MyApplication.Endpoint.csproj
+
+
+
+dotnet ef database update --context=ApplicationDbContext --startup-project=../MyApplication.Endpoint/MyApplication.Endpoint.csproj
+

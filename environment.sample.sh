@@ -7,7 +7,7 @@ export NGINX_VOL=$(pwd)/docker-data/nginx
 export CERTBOT_VOL=$(pwd)/docker-data/certbot
 
 # $(docker run --rm httpd:2.4-alpine htpasswd -nbB admin 'f7dT9hmP3gM7' | cut -d ":" -f 2)
-# $2y$05$JvbTrH4ttme3Qre0eAibz.1n6PKU2Kcien77Myfd4Tn.EdMdNfRKq
+# set the PORTAINER_PASSWORD=out put of the above command
 export PORTAINER_PASSWORD='$2y$05$QJ4Ik8O/GFaBXEj8Wo4rje/yHawl1j41Ufzu3Sf0enuanS.sfijYa'
 export RABBITMQ_USERNAME='admin'
 export RABBITMQ_PASSWORD=''

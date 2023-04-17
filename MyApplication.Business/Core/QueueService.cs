@@ -20,11 +20,10 @@ internal class QueueService : IQueueService
     private readonly string _password;
     private readonly string _prefix;
     private readonly string _username;
+    private bool _initialized;
     private IModel? _channel;
     private IConnection? _connection;
-
     private ConnectionFactory _factory;
-    private bool _initialized;
     private IBasicProperties _properties;
 
     public QueueService(IJsonService jsonService, ILoggerService logger)
@@ -111,31 +110,10 @@ internal class QueueService : IQueueService
         return consumer;
     }
 
-    public Task Subscribe(string queueName)
-    {
-        return Declare(queueName);
-    }
-
-    public Task Unsubscribe()
-    {
-        return Task.CompletedTask;
-    }
-
     public Task Close()
     {
         if (_channel != null && _channel.IsOpen) _channel.Close();
         if (_connection != null && _connection.IsOpen) _connection.Close();
-        return Task.CompletedTask;
-    }
-
-    public Task Ack(string queueName)
-    {
-        if (_consumedList.ContainsKey(queueName))
-        {
-            _channel?.BasicAck(_consumedList[queueName], false);
-            _consumedList.Remove(queueName);
-        }
-
         return Task.CompletedTask;
     }
 

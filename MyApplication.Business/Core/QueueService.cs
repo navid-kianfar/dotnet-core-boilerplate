@@ -9,8 +9,6 @@ namespace MyApplication.Business.Core;
 internal class QueueService : IQueueService
 {
     private readonly List<string> _boundQueuesToExchange = new();
-    private readonly bool _broadcast = false;
-
     private readonly Dictionary<string, ulong> _consumedList = new();
     private readonly List<string> _declaredQueues = new();
     private readonly string _exchange;
@@ -61,29 +59,6 @@ internal class QueueService : IQueueService
     {
         var serialized = _jsonService.Serialize(data);
         return Enqueue(queueName, serialized);
-    }
-
-    public async Task<T> Dequeue<T>(string queueName, int? timeout) where T : class
-    {
-        var content = await Dequeue(queueName, timeout);
-        return _jsonService.Deserialize<T>(content)!;
-    }
-
-    public async Task<string> Dequeue(string queueName, int? timeout)
-    {
-        await Declare(queueName);
-        BindQueueToExchange(queueName);
-
-        var item = _channel.BasicGet(queueName, false);
-        if (item == null)
-        {
-            if (timeout.HasValue) await Task.Delay(timeout.Value);
-            return null;
-        }
-
-        _consumedList[queueName] = item.DeliveryTag;
-        var content = Encoding.UTF8.GetString(item.Body.ToArray());
-        return content;
     }
 
     public async Task<object> Subscribe(string queueName, Func<string, Task<bool>> handler)
@@ -153,13 +128,8 @@ internal class QueueService : IQueueService
         _channel.BasicQos(0, 1, false);
         _connection.ConnectionShutdown += (sender, e) => InitializeRabbitMq();
         if (!string.IsNullOrEmpty(_exchange))
-            _channel.ExchangeDeclare(_exchange, GetExchangeType());
+            _channel.ExchangeDeclare(_exchange, ExchangeType.Topic);
         _initialized = true;
-    }
-
-    private string GetExchangeType()
-    {
-        return _broadcast ? ExchangeType.Fanout : ExchangeType.Topic;
     }
 
     private void BindQueueToExchange(string queueName)
@@ -167,7 +137,7 @@ internal class QueueService : IQueueService
         if (string.IsNullOrEmpty(_exchange) || _boundQueuesToExchange.Any(q => q == queueName))
             return;
 
-        _channel.ExchangeDeclare(_exchange, GetExchangeType());
+        _channel.ExchangeDeclare(_exchange, ExchangeType.Topic);
         _channel.QueueBind(queueName, _exchange, string.Empty);
         _boundQueuesToExchange.Add(queueName);
     }

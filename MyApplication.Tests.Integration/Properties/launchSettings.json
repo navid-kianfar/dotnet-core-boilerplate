@@ -1,0 +1,31 @@
+﻿{
+  "profiles": {
+    "MyApplication.Endpoint": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5050",
+      "environmentVariables": {
+        "APP_ENV": "Test",
+        "APP_IP": "localhost",
+        "APP_PORT": "5050",
+        "APP_BUILD": "1.0.0",
+        "APP_AUTH_ISSUER": "my-app",
+        "APP_AUTH_SECRET": "CYEVoDJAFmsu42k1j9O7Bda5Wfe6nUYzNHnPKiB1DKb96aeTxW",
+        "APP_AUTH_SALT": "vVZy0ZgV5aCn56UleHKfWE6qTWCa3VJm0hqPt20fcMBO6Jsxhj",
+        "APP_DB_SERVER": "localhost",
+        "APP_DB_NAME": "my-app-development",
+        "APP_DB_USER": "o5c1amRZ50zIztPE",
+        "APP_DB_PASS": "DM019341alC3ElV9YeJjqEr1c9i6X2tdasuYHt78a1lGbsGP2G",
+        "APP_STORAGE_SERVER": "localhost",
+        "APP_STORAGE_USER": "",
+        "APP_STORAGE_PASS": "",
+        "APP_STORAGE_BUCKET": "my-app",
+        "APP_QUEUE_SERVER": "localhost",
+        "APP_QUEUE_USER": "admin",
+        "APP_QUEUE_PASS": "JxKvc8iIldfHl6oLgTV9PO3nuDIqczERTy24vns5KTXGl2Us1X",
+        "APP_QUEUE_PREFIX": "my-app"
+      }
+    }
+  }
+}

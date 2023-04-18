@@ -9,6 +9,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="7.0.5" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="MimeTypesMap" Version="1.0.8" />
+        <PackageReference Include="Minio" Version="4.0.7" />
         <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
     </ItemGroup>
 

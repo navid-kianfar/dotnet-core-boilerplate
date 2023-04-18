@@ -2,7 +2,7 @@ using MyApplication.DataAccess.Tables;
 
 namespace MyApplication.Tests.Integration.Setup;
 
-public class DatabaseSeed
+internal class DatabaseSeed
 {
     public readonly User[] Users;
     

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace MyApplication.Tests.Integration.Controllers;
 
 [TestFixture]
-public class AccountControllerTests: 
+internal class AccountControllerTests: 
     ApiIntegrationTestBase<TestStartup, DatabaseSeed, ApplicationDbContext>,
     IAccountControllerIntegrationTests
 {

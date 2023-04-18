@@ -1,36 +1,50 @@
 # MyApplication - Boilerplate
 
-### MyApplication.Abstraction
+## MyApplication.Abstraction
 
-### MyApplication.Business
+## MyApplication.Business
 
-### MyApplication.DataAccess
+## MyApplication.DataAccess
 
-### MyApplication.Endpoint
-#### BaseController
-#### AccountController
-#### StorageController
+## MyApplication.Endpoint
+Open api end point for the application
 
-### MyApplication.Workers
+### BaseController
+The base controller for all the apis that forces authorization and handles the AuthUser data in the pipeline
 
-#### QueueListenerWorker
+### AccountController
+implements the basic operations for account management
+* `Task<OperationResult<ProfileResponse>> Profile()`
+* `Task<OperationResult<LoginResponse>> Login(LoginRequest request)`
+* `Task<OperationResult<RegisterResponse>> Register(RegisterRequest request)`
+
+### StorageController
+Implements the basic operation for uploading/downloading the objects from minio object storage
+* `Task<OperationResult<StorageItemDto>> UploadPublic()`
+* `Task<OperationResult<StorageItemDto>> UploadProtected()`
+* `Task<IActionResult> DownloadPublic(string path)`
+* `Task<IActionResult> DownloadProtected(string path)`
+
+## MyApplication.Workers
+
+### QueueListenerWorker
 This is a base worker that will listen on a queue and will trigger when an item is pushed to it
 and **ExecuteAction** method will be called with the input type casted to the given input type
 if the process is successful the item will automatically acked from the queue
 if process fails item will be rejected and goes back to the queue
 Note: in real scenarios here we have to add a fail retry mechanism or something but it depends
 on the application business (you may need to process items in pushed order so you can not go to the next item)
-#### AccountBackgroundWorker
+### AccountBackgroundWorker
 This background worker is responsible to long running processes related to actions
 affecting an account, there might be a need to send an verification email or an otp...
 
-### MyApplication.Tests.Integration
+## MyApplication.Tests.Integration
 The integration tests of each controller will be in a separate file 
 
-#### DatabaseSeed
+### DatabaseSeed
 This is a class holding variables that are used in the tests and also the **OnSeedingDatabase** will be executed before each test
 
-#### EndpointIntegrationTestBase
+### EndpointIntegrationTestBase
 EndpointIntegrationTestBase is a generic class that accepts a Startup, DatabaseSeed and a db context.
 it accepts a base url prefix and exposes the following methods:
 
@@ -47,7 +61,7 @@ protected override async Task OnSeedingDatabase(ApplicationDbContext dbContext, 
     await dbContext.SaveChangesAsync();
 }
 ```
-#### AccountControllerTests
+### AccountControllerTests
 The integration tests for account controller
 
 ``` csharp
@@ -72,5 +86,19 @@ public interface IAccountControllerIntegrationTests
 }
 ```
 
-### MyApplication.Tests.Unit
+## MyApplication.Tests.Unit
+
+### AccountServiceTests
+The unit tests for account service
+it implements the **IAccountServiceTests** interface
+``` csharp
+public interface IAccountServiceTests
+{
+    Task Register_ShouldSucceed_UserDoesNotExists();
+    Task Register_ShouldFail_UserDoesExists();
+    Task Login_ShouldSucceed_CredentialsAreValid();
+    Task Login_ShouldFail_CredentialsAreInvalid();
+    Task GetProfile_ShouldSucceed_TokenIsValid();
+}
+```
  

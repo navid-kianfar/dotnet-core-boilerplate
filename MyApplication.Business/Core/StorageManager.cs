@@ -17,14 +17,14 @@ internal class StorageManager : IStorageManager
     public async Task<StorageItemDto?> DownloadPublic(string path)
     {
         if (CheckIfPathIsSafe(path)) return null;
-        var op = await _storageService.DownloadPublic(path);
+        var op = await _storageService.Download(path, ApplicationConstants.PublicBucket);
         return op.Data;
     }
 
     public async Task<StorageItemDto?> DownloadProtected(Guid userId, string path)
     {
-        if (CheckIfPathIsSafe(path)) return null;
-        var op = await _storageService.DownloadProtected(userId, path);
+        if (CheckIfPathIsSafe(path, userId)) return null;
+        var op = await _storageService.Download(path, ApplicationConstants.ProtectedBucket);
         return op.Data;
     }
 
@@ -42,5 +42,10 @@ internal class StorageManager : IStorageManager
 
     private string GetPath(string fileName) =>
         $"{DateTime.UtcNow:yyyy-MM-dd}/{IncrementalGuid.NewId()}/{fileName}"; 
-    private bool CheckIfPathIsSafe(string path) => !path.Contains("../");
+    private bool CheckIfPathIsSafe(string path, Guid? userId = null) 
+    {
+        if (userId.HasValue)
+            return !path.Contains(userId.Value.ToString());
+        return !path.Contains("../");
+    }
 }

@@ -13,6 +13,8 @@ public static class Startup
         services.RegisterDataAccess();
         services.AddScoped<IAccountService, AccountService>();
         services.AddSingleton<IQueueService, QueueService>();
+        services.AddSingleton<IStorageService, StorageService>();
+        services.AddSingleton<IStorageManager, StorageManager>();
         return services;
     }
 }

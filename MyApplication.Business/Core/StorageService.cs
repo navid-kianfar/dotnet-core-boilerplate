@@ -84,6 +84,21 @@ internal class StorageService : IStorageService, IDisposable
                     stream.Seek(0, SeekOrigin.Begin);
                 });
             var response = await _client.GetObjectAsync(args);
+            if (response == null) return OperationResult<StorageItemDto>.Failed();
+
+            var fileName = Path.GetFileName(path);
+            var fileExt = Path.GetExtension(path);
+            
+            return OperationResult<StorageItemDto>.Success(new StorageItemDto
+            {
+                Url = path,
+                CreatedAt = DateTime.UtcNow,
+                Extension = fileExt,
+                Stream = stream,
+                FileName = fileName,
+                FileSize = response.Size,
+                MimeType = response.ContentType,
+            });
         }
         catch (Exception e)
         {

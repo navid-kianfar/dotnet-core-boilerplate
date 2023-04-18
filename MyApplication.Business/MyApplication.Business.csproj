@@ -12,6 +12,13 @@
         <PackageReference Include="RabbitMQ.Client" Version="6.5.0"/>
     </ItemGroup>
 
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>MyApplication.Tests.Unit</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+    
     <ItemGroup>
         <ProjectReference Include="..\MyApplication.Abstraction\MyApplication.Abstraction.csproj"/>
         <ProjectReference Include="..\MyApplication.DataAccess\MyApplication.DataAccess.csproj"/>

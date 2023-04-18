@@ -3,6 +3,7 @@ using MyApplication.Abstraction.Enums;
 using MyApplication.Abstraction.Fixtures;
 using MyApplication.Abstraction.Tests;
 using MyApplication.DataAccess.Contexts;
+using MyApplication.Endpoint.Services;
 using MyApplication.Endpoint.Setup;
 using MyApplication.Tests.Integration.Setup;
 using NUnit.Framework;
@@ -11,14 +12,21 @@ namespace MyApplication.Tests.Integration.Controllers;
 
 [TestFixture]
 internal class AccountControllerTests: 
-    ApiIntegrationTestBase<TestStartup, DatabaseSeed, ApplicationDbContext>,
+    EndpointIntegrationTestBase<TestStartup, DatabaseSeed, ApplicationDbContext>,
     IAccountControllerIntegrationTests
 {
     public AccountControllerTests() : base(EndpointConstants.Prefix)
     {
         
     }
-    
+
+    protected override Task<string> OnGeneratingToken(DatabaseSeed seedData)
+    {
+        var user = seedData.Users.First().ToDto();
+        var token = TokenService.GenerateToken(user);
+        return Task.FromResult(token);
+    }
+
     protected override async Task OnSeedingDatabase(ApplicationDbContext dbContext, DatabaseSeed seedData)
     {
         await dbContext.Users.DeleteFromQueryAsync();

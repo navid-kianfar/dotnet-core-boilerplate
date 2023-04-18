@@ -47,6 +47,30 @@ protected override async Task OnSeedingDatabase(ApplicationDbContext dbContext, 
     await dbContext.SaveChangesAsync();
 }
 ```
+#### AccountControllerTests
+The integration tests for account controller
+
+``` csharp
+internal class AccountControllerTests :
+    EndpointIntegrationTestBase<TestStartup, DatabaseSeed, ApplicationDbContext>,
+    IAccountControllerIntegrationTests
+{
+    public AccountControllerTests() : base(EndpointConstants.Prefix)
+    {
+    }
+}
+```
+it implements the **IAccountControllerIntegrationTests** interface
+``` csharp
+public interface IAccountControllerIntegrationTests
+{
+    Task Register_ShouldSucceed_UserDoesNotExists();
+    Task Register_ShouldFail_UserDoesExists();
+    Task Login_ShouldSucceed_CredentialsAreValid();
+    Task Login_ShouldFail_CredentialsAreInvalid();
+    Task GetProfile_ShouldSucceed_TokenIsValid();
+}
+```
 
 ### MyApplication.Tests.Unit
  

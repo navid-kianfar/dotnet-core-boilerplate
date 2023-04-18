@@ -11,25 +11,19 @@ namespace MyApplication.Tests.Integration.Setup;
 internal abstract class EndpointIntegrationTestBase<S, T, C> where S : class
 {
     private readonly string _apiPrefix;
-    protected T _databaseSeed;
     protected readonly HttpClient _client;
     protected readonly WebApplicationFactory<S> _factory;
+    protected T _databaseSeed;
 
     protected EndpointIntegrationTestBase(string apiPrefix)
     {
         EnvironmentHelper.Configure();
         _apiPrefix = apiPrefix;
         _factory = new WebApplicationFactory<S>();
-        _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureServices(services =>
-            {
-                
-            });
-        });
+        _factory.WithWebHostBuilder(builder => { builder.ConfigureServices(services => { }); });
         _client = _factory.CreateClient();
     }
-    
+
     protected async Task<OperationResult<X>> GetJsonAsync<X>(string route)
     {
         var endpoint = $"{_apiPrefix}/{route}";
@@ -53,14 +47,14 @@ internal abstract class EndpointIntegrationTestBase<S, T, C> where S : class
         token ??= await OnGeneratingToken(_databaseSeed);
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
     }
-    
+
     [SetUp]
     protected virtual async Task PrepareMockData()
     {
         _databaseSeed = Activator.CreateInstance<T>();
         using (var scope = _factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
-            var dbRepository = (scope.ServiceProvider.GetService<C>())!;
+            var dbRepository = scope.ServiceProvider.GetService<C>()!;
             try
             {
                 await OnSeedingDatabase(dbRepository, _databaseSeed);
@@ -71,14 +65,18 @@ internal abstract class EndpointIntegrationTestBase<S, T, C> where S : class
             }
             finally
             {
-                if (dbRepository is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
+                if (dbRepository is IDisposable disposable) disposable.Dispose();
             }
         }
     }
 
-    protected virtual Task OnSeedingDatabase(C dbContext, T seedData) => Task.CompletedTask;
-    protected virtual Task<string> OnGeneratingToken(T seedData) => Task.FromResult(String.Empty);
+    protected virtual Task OnSeedingDatabase(C dbContext, T seedData)
+    {
+        return Task.CompletedTask;
+    }
+
+    protected virtual Task<string> OnGeneratingToken(T seedData)
+    {
+        return Task.FromResult(string.Empty);
+    }
 }

@@ -11,13 +11,12 @@ using NUnit.Framework;
 namespace MyApplication.Tests.Integration.Controllers;
 
 [TestFixture]
-internal class AccountControllerTests: 
+internal class AccountControllerTests :
     EndpointIntegrationTestBase<TestStartup, DatabaseSeed, ApplicationDbContext>,
     IAccountControllerIntegrationTests
 {
     public AccountControllerTests() : base(EndpointConstants.Prefix)
     {
-        
     }
 
     protected override Task<string> OnGeneratingToken(DatabaseSeed seedData)
@@ -37,8 +36,7 @@ internal class AccountControllerTests:
     [Test]
     public async Task Login_ShouldSucceed_CredentialsAreValid()
     {
-        
-        var request = new LoginRequest()
+        var request = new LoginRequest
         {
             Username = _databaseSeed.Users.First().Username,
             Password = _databaseSeed.Password
@@ -59,7 +57,7 @@ internal class AccountControllerTests:
     [Test]
     public async Task Login_ShouldFail_CredentialsAreInvalid()
     {
-        var request = new LoginRequest()
+        var request = new LoginRequest
         {
             Username = _databaseSeed.Users.First().Username,
             Password = Guid.NewGuid().ToString()
@@ -94,7 +92,7 @@ internal class AccountControllerTests:
     [Test]
     public async Task Register_ShouldSucceed_UserDoesNotExists()
     {
-        var request = new RegisterRequest()
+        var request = new RegisterRequest
         {
             Username = $"{Guid.NewGuid()}@my-application.com",
             Password = _databaseSeed.Password
@@ -115,7 +113,7 @@ internal class AccountControllerTests:
     [Test]
     public async Task Register_ShouldFail_UserDoesExists()
     {
-        var request = new RegisterRequest()
+        var request = new RegisterRequest
         {
             Username = _databaseSeed.Users.First().Username,
             Password = _databaseSeed.Password

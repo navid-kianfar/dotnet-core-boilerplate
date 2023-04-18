@@ -18,10 +18,10 @@ internal class QueueService : IQueueService
     private readonly string _password;
     private readonly string _prefix;
     private readonly string _username;
-    private bool _initialized;
     private IModel? _channel;
     private IConnection? _connection;
     private ConnectionFactory _factory;
+    private bool _initialized;
     private IBasicProperties _properties;
 
     public QueueService(IJsonService jsonService, ILoggerService logger)
@@ -85,13 +85,6 @@ internal class QueueService : IQueueService
         return consumer;
     }
 
-    public Task Close()
-    {
-        if (_channel != null && _channel.IsOpen) _channel.Close();
-        if (_connection != null && _connection.IsOpen) _connection.Close();
-        return Task.CompletedTask;
-    }
-
     public string GetQueueName(string name, string lang = "en")
     {
         return $"{_prefix}-{lang}-{name}"
@@ -99,6 +92,13 @@ internal class QueueService : IQueueService
             .ToLower()
             .Replace('.', '-')
             .Replace(' ', '-');
+    }
+
+    public Task Close()
+    {
+        if (_channel != null && _channel.IsOpen) _channel.Close();
+        if (_connection != null && _connection.IsOpen) _connection.Close();
+        return Task.CompletedTask;
     }
 
     public Task Declare(string queueName)

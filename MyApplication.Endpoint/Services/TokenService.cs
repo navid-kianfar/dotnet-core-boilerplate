@@ -14,6 +14,7 @@ public static class TokenService
     private static readonly string _secret;
     private static readonly byte[] _key;
     private static readonly SymmetricSecurityKey _symetrics;
+
     static TokenService()
     {
         _issuer = EnvironmentHelper.Get("APP_AUTH_ISSUER")!;
@@ -21,6 +22,7 @@ public static class TokenService
         _key = Encoding.UTF8.GetBytes(_secret);
         _symetrics = new SymmetricSecurityKey(_key);
     }
+
     public static TokenValidationParameters GetParameters()
     {
         return new TokenValidationParameters

@@ -32,6 +32,8 @@ internal class AccountControllerTests:
         
         var request = new LoginRequest()
         {
+            Username = _databaseSeed.Users.First().Username,
+            Password = _databaseSeed.Password
         };
 
         var test = await PostJsonAsync<LoginResponse>(EndpointConstants.Login, request);
@@ -51,6 +53,8 @@ internal class AccountControllerTests:
     {
         var request = new LoginRequest()
         {
+            Username = _databaseSeed.Users.First().Username,
+            Password = Guid.NewGuid().ToString()
         };
 
         var test = await PostJsonAsync<LoginResponse>(EndpointConstants.Login, request);
@@ -84,6 +88,8 @@ internal class AccountControllerTests:
     {
         var request = new RegisterRequest()
         {
+            Username = $"{Guid.NewGuid()}@my-application.com",
+            Password = _databaseSeed.Password
         };
 
         var test = await PostJsonAsync<RegisterResponse>(EndpointConstants.Register, request);
@@ -95,7 +101,7 @@ internal class AccountControllerTests:
 
         Assert.NotNull(test.Data);
 
-        Assert.IsNotEmpty(test.Message, test.Data.Token);
+        Assert.IsNotEmpty(test.Data!.Token);
     }
 
     [Test]
@@ -103,6 +109,8 @@ internal class AccountControllerTests:
     {
         var request = new RegisterRequest()
         {
+            Username = _databaseSeed.Users.First().Username,
+            Password = _databaseSeed.Password
         };
 
         var test = await PostJsonAsync<RegisterResponse>(EndpointConstants.Register, request);

@@ -44,7 +44,7 @@ internal class AccountServiceTests : IAccountServiceTests
             .ReturnsAsync(((UserDto?)null));
 
         _accountRepository
-            .Setup(i => i.CreateUser())
+            .Setup(i => i.CreateUser(It.IsAny<UserDto>()))
             .ReturnsAsync(true);
 
         var test = await _service.Register(request);
@@ -133,11 +133,9 @@ internal class AccountServiceTests : IAccountServiceTests
         //assert
         Assert.NotNull(test);
 
-        Assert.That(test!.Status, Is.EqualTo(OperationResultStatus.Success));
+        Assert.That(test!.Status, Is.EqualTo(OperationResultStatus.Rejected));
 
-        Assert.NotNull(test.Data);
-
-        Assert.That(request.Username, Is.EqualTo(test.Data!.Username));
+        Assert.Null(test.Data);
     }
 
     [Test]

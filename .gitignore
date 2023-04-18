@@ -8,3 +8,4 @@ riderModule.iml
 .vscode
 docker-data
 environment.sh
+*.DotSettings.user

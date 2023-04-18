@@ -86,16 +86,13 @@ internal class StorageService : IStorageService, IDisposable
             var response = await _client.GetObjectAsync(args);
             if (response == null) return OperationResult<StorageItemDto>.Failed();
 
-            var fileName = Path.GetFileName(path);
-            var fileExt = Path.GetExtension(path);
-            
             return OperationResult<StorageItemDto>.Success(new StorageItemDto
             {
                 Url = path,
-                CreatedAt = DateTime.UtcNow,
-                Extension = fileExt,
                 Stream = stream,
-                FileName = fileName,
+                CreatedAt = DateTime.UtcNow,
+                Extension = Path.GetExtension(path),
+                FileName = Path.GetFileName(path),
                 FileSize = response.Size,
                 MimeType = response.ContentType,
             });

@@ -30,6 +30,7 @@ export APP_AUTH_SALT=''
 
 export APP_DB_SERVER='192.168.17.7'
 export APP_DB_PORT='5432'
+export APP_DB_NAME='my-app-development'
 export APP_DB_USER=${POSTGRES_USERNAME}
 export APP_DB_PASS=${POSTGRES_PASSWORD}
 

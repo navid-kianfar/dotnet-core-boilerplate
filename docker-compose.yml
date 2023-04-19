@@ -98,80 +98,80 @@ services:
       app_network:
         ipv4_address: 192.168.17.7
 
-#  endpoint:
-#    image: 'my-app-endpoint'
-#    hostname: 'my-app-endpoint'
-#    build:
-#      dockerfile: ./Dockerfile-endpoint
-#    container_name: my-app-endpoint
-#    restart: unless-stopped
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#    ports:
-#      - '5000:80'
-#    depends_on:
-#      - postgres
-#      - minio
-#      - rabbitmq
-#    environment:
-#      - APP_ENV=${APP_ENV}
-#      - APP_BUILD=${APP_BUILD}
-#      - APP_AUTH_ISSUER=${APP_AUTH_ISSUER}
-#      - APP_AUTH_SECRET=${APP_AUTH_SECRET}
-#      - APP_AUTH_SALT=${APP_AUTH_SALT}
-#      - APP_DB_SERVER=${APP_DB_SERVER}
-#      - APP_DB_PORT=${APP_DB_PORT}
-#      - APP_DB_USER=${APP_DB_USER}
-#      - APP_DB_PASS=${APP_DB_PASS}
-#      - APP_STORAGE_SERVER=${APP_STORAGE_SERVER}
-#      - APP_STORAGE_PORT=${APP_STORAGE_PORT}
-#      - APP_STORAGE_USER=${APP_STORAGE_USER}
-#      - APP_STORAGE_PASS=${APP_STORAGE_PASS}
-#      - APP_STORAGE_BUCKET=${APP_STORAGE_BUCKET}
-#      - APP_QUEUE_SERVER=${APP_QUEUE_SERVER}
-#      - APP_QUEUE_PORT=${APP_QUEUE_PORT}
-#      - APP_QUEUE_USER=${APP_QUEUE_USER}
-#      - APP_QUEUE_PASS=${APP_QUEUE_PASS}
-#      - APP_QUEUE_PREFIX=${APP_QUEUE_PREFIX}
-#    networks:
-#      app_network:
-#        ipv4_address: 192.168.17.10   
-#  workers:
-#    image: 'my-app-workers'
-#    hostname: 'my-app-workers'
-#    build:
-#      dockerfile: ./Dockerfile-workers
-#    container_name: my-app-workers
-#    restart: unless-stopped
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#    depends_on:
-#      - postgres
-#      - minio
-#      - rabbitmq
-#    environment:
-#      - APP_ENV=${APP_ENV}
-#      - APP_BUILD=${APP_BUILD}
-#      - APP_AUTH_ISSUER=${APP_AUTH_ISSUER}
-#      - APP_AUTH_SECRET=${APP_AUTH_SECRET}
-#      - APP_AUTH_SALT=${APP_AUTH_SALT}
-#      - APP_DB_SERVER=${APP_DB_SERVER}
-#      - APP_DB_PORT=${APP_DB_PORT}
-#      - APP_DB_USER=${APP_DB_USER}
-#      - APP_DB_PASS=${APP_DB_PASS}
-#      - APP_STORAGE_SERVER=${APP_STORAGE_SERVER}
-#      - APP_STORAGE_PORT=${APP_STORAGE_PORT}
-#      - APP_STORAGE_USER=${APP_STORAGE_USER}
-#      - APP_STORAGE_PASS=${APP_STORAGE_PASS}
-#      - APP_STORAGE_BUCKET=${APP_STORAGE_BUCKET}
-#      - APP_QUEUE_SERVER=${APP_QUEUE_SERVER}
-#      - APP_QUEUE_PORT=${APP_QUEUE_PORT}
-#      - APP_QUEUE_USER=${APP_QUEUE_USER}
-#      - APP_QUEUE_PASS=${APP_QUEUE_PASS}
-#      - APP_QUEUE_PREFIX=${APP_QUEUE_PREFIX}
-#    networks:
-#      app_network:
-#        ipv4_address: 192.168.17.11
+  endpoint:
+    image: 'my-app-endpoint'
+    hostname: 'my-app-endpoint'
+    build:
+      dockerfile: ./Dockerfile-endpoint
+    container_name: my-app-endpoint
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '5050:80'
+    depends_on:
+      - postgres
+      - minio
+      - rabbitmq
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_BUILD=${APP_BUILD}
+      - APP_AUTH_ISSUER=${APP_AUTH_ISSUER}
+      - APP_AUTH_SECRET=${APP_AUTH_SECRET}
+      - APP_AUTH_SALT=${APP_AUTH_SALT}
+      - APP_DB_SERVER=${APP_DB_SERVER}
+      - APP_DB_PORT=${APP_DB_PORT}
+      - APP_DB_USER=${APP_DB_USER}
+      - APP_DB_PASS=${APP_DB_PASS}
+      - APP_STORAGE_SERVER=${APP_STORAGE_SERVER}
+      - APP_STORAGE_PORT=${APP_STORAGE_PORT}
+      - APP_STORAGE_USER=${APP_STORAGE_USER}
+      - APP_STORAGE_PASS=${APP_STORAGE_PASS}
+      - APP_STORAGE_BUCKET=${APP_STORAGE_BUCKET}
+      - APP_QUEUE_SERVER=${APP_QUEUE_SERVER}
+      - APP_QUEUE_PORT=${APP_QUEUE_PORT}
+      - APP_QUEUE_USER=${APP_QUEUE_USER}
+      - APP_QUEUE_PASS=${APP_QUEUE_PASS}
+      - APP_QUEUE_PREFIX=${APP_QUEUE_PREFIX}
+    networks:
+      app_network:
+        ipv4_address: 192.168.17.10   
+  workers:
+    image: 'my-app-workers'
+    hostname: 'my-app-workers'
+    build:
+      dockerfile: ./Dockerfile-workers
+    container_name: my-app-workers
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - postgres
+      - minio
+      - rabbitmq
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_BUILD=${APP_BUILD}
+      - APP_AUTH_ISSUER=${APP_AUTH_ISSUER}
+      - APP_AUTH_SECRET=${APP_AUTH_SECRET}
+      - APP_AUTH_SALT=${APP_AUTH_SALT}
+      - APP_DB_SERVER=${APP_DB_SERVER}
+      - APP_DB_PORT=${APP_DB_PORT}
+      - APP_DB_USER=${APP_DB_USER}
+      - APP_DB_PASS=${APP_DB_PASS}
+      - APP_STORAGE_SERVER=${APP_STORAGE_SERVER}
+      - APP_STORAGE_PORT=${APP_STORAGE_PORT}
+      - APP_STORAGE_USER=${APP_STORAGE_USER}
+      - APP_STORAGE_PASS=${APP_STORAGE_PASS}
+      - APP_STORAGE_BUCKET=${APP_STORAGE_BUCKET}
+      - APP_QUEUE_SERVER=${APP_QUEUE_SERVER}
+      - APP_QUEUE_PORT=${APP_QUEUE_PORT}
+      - APP_QUEUE_USER=${APP_QUEUE_USER}
+      - APP_QUEUE_PASS=${APP_QUEUE_PASS}
+      - APP_QUEUE_PREFIX=${APP_QUEUE_PREFIX}
+    networks:
+      app_network:
+        ipv4_address: 192.168.17.11
 
 #  nginx:
 #    container_name: nginx

@@ -37,7 +37,7 @@ public static class Startup
             });
         });
         services.AddTransient<IAccountRepository, AccountRepository>();
-        services.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
+        services.AddTransient<IDatabaseMigrator, DatabaseMigrator>();
         return services;
     }
 }

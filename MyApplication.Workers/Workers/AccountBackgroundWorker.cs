@@ -31,7 +31,7 @@ internal class AccountBackgroundWorker : QueueListenerWorker<AccountBackgroundRe
     /// <param name="cancellationToken"></param>
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        await _logger.Log("StartAsync", "ActivityBackgroundService");
+        await _logger.Log("StartAsync", "AccountBackgroundWorker");
         await base.StartAsync(cancellationToken);
     }
 
@@ -41,7 +41,7 @@ internal class AccountBackgroundWorker : QueueListenerWorker<AccountBackgroundRe
     /// <param name="cancellationToken"></param>
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
-        await _logger.Log("StopAsync", "ActivityBackgroundService");
+        await _logger.Log("StopAsync", "AccountBackgroundWorker");
         await base.StartAsync(cancellationToken);
     }
 

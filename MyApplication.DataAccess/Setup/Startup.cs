@@ -4,6 +4,7 @@ using MyApplication.Abstraction.Contracts;
 using MyApplication.Abstraction.Helpers;
 using MyApplication.DataAccess.Contexts;
 using MyApplication.DataAccess.Repositories;
+using MyApplication.DataAccess.Setup;
 
 namespace MyApplication.DataAccess;
 
@@ -36,6 +37,7 @@ public static class Startup
             });
         });
         services.AddTransient<IAccountRepository, AccountRepository>();
+        services.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
         return services;
     }
 }
